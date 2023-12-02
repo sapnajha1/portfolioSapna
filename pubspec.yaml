@@ -42,18 +42,19 @@ dependencies:
   http: ^1.1.0
   url_launcher: ^6.1.14
   flutter_tts: ^3.8.3
-  speech_to_text: ^6.3.0
+#  speech_to_text: ^6.3.0
+  flutter_launcher_icons: ^0.13.1
+  firebase_core: ^2.24.0
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-#  flutter_launcher_icons: ^0.13.1
 
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "images/new.png"
+  image_path: "assets/icon/new.png"
   min_sdk_android: 21
 
   # The "flutter_lints" package below contains a set of recommended lints to
