@@ -28,7 +28,8 @@ class _SignUpState extends State<SignUp> {
 
   GoogleLogIn() async{
     GoogleSignIn _googlesignin= await GoogleSignIn(clientId:
-        "857706222236-n9c94lts14dkl33icejcgqef1ahgod6v.apps.googleusercontent.com"
+    "857706222236-3aj9aga18br8o540as52oukias8kc6kp.apps.googleusercontent.com"
+        // "857706222236-n9c94lts14dkl33icejcgqef1ahgod6v.apps.googleusercontent.com"
         // "857706222236-tfre1anfe69bdp88t3i9ccckadvqf43d.apps.googleusercontent.com"
     // "378417933442-4k0ff2qdq6dmno0slha2rpar80h9sfff.apps.googleusercontent.com"
     );
