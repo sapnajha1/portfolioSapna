@@ -8,14 +8,14 @@ class Article_image extends StatelessWidget {
     super.key,
     required this.height,
     required this.width,
-    // required this.imgurl,
+    required this.imgurl,
 
 
   });
 
   final double height;
   final double width;
-  // final String imgurl;
+  final String imgurl;
 
 
   @override
@@ -39,10 +39,10 @@ class Article_image extends StatelessWidget {
                 height:height,
                 width:width,
                 decoration: BoxDecoration(borderRadius: BorderRadius.only(topLeft: Radius.circular(20),bottomLeft: Radius.circular(20) )),
-                // child:ClipRRect(
-                //     borderRadius:BorderRadius.only(topLeft: Radius.circular(40),
-                //         bottomLeft: Radius.circular(40) ),
-                //     child: Image.asset(imgurl,fit:BoxFit.fill)) ,
+                child:ClipRRect(
+                    borderRadius:BorderRadius.only(topLeft: Radius.circular(40),
+                        bottomLeft: Radius.circular(40) ),
+                    child: Image.asset(imgurl,fit:BoxFit.fill)) ,
 
               )
           ),

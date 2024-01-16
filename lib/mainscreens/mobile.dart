@@ -242,7 +242,7 @@ class _MobilePageState extends State<MobilePage> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               // ARTICLE IMAGE
-                              Article_image(height:mq.height*0.05,width:mq.width*0.220, ),
+                              Article_image(height:mq.height*0.05,width:mq.width*0.220, imgurl:'images/games.jpeg', ),
 
                               // ARTICLE NAME
                               //  Wrap(children:[ Container(width:150,height:50,color:Colors.red,child: textwidget(article_content[article_name_in].title,20, FontWeight.bold, Colors.black))]),
