@@ -243,7 +243,7 @@ class _DesktopPageState extends State<DesktopPage> {
   List<Article_Model> article_content=[];
   Future<void> fetchData() async {
     try {
-      final response = await http.get(Uri.parse('https://merd-api.merakilearn.org/englishAi/content'));
+      final response = await http.get(Uri.parse('https://merd-api.merakilearn.org/englishAi/content/today'));
 
       if (response.statusCode == 200) {
         final jsonData = json.decode(response.body)['articles'] as List<dynamic>;
