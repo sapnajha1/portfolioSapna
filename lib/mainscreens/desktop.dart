@@ -1,25 +1,14 @@
 
 import 'dart:async';
 import 'dart:convert';
-// import 'dart:js_util';
-// import 'package:englishetc_voice_ai/api_function/model.dart';
-// import 'package:englishetc_voice_ai/components/Article.dart';
-// import 'package:englishetc_voice_ai/components/Focus.dart';
-// import 'package:englishetc_voice_ai/const/color.dart';
-// import 'package:englishetc_voice_ai/constWidget/textwidget.dart';
-// import 'package:englishetc_voice_ai/focus_screens/f_desktop.dart';
-// import 'package:englishetc_voice_ai/mainscreens/progress.dart';
-// import 'package:englishetc_voice_ai/ttsexample.dart';
-import 'package:etc/mainscreens/progress.dart';
+
+import 'package:etc/components/api_function/api.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:http/http.dart' as http;
-// import 'package:speech_to_text/speech_to_text.dart' as stt;
-
-
 import '../api_function/model.dart';
 import '../components/Article.dart';
 import '../components/Focus.dart';

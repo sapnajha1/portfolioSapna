@@ -4,6 +4,7 @@ import 'dart:convert';
 // import 'package:englishetc_voice_ai/const/color.dart';
 // import 'package:englishetc_voice_ai/constWidget/textwidget.dart';
 // import 'package:englishetc_voice_ai/mainscreens/aap_bar.dart';
+import 'package:etc/components/api_function/api.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -70,10 +71,7 @@ class _article_namesState extends State<article_names> {
 
                     return ListTile(
                         title: Text("$numberedIndex. $articleTitle"));
-
-
-
-                  },
+},
                 ),
               ),
               // You can add more widgets below the ListView.builder if needed

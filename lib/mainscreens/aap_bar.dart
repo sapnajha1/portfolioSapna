@@ -1,21 +1,14 @@
+import 'dart:html';
 
-
-import 'dart:ui';
-
-// import 'package:englishetc_voice_ai/Registered_pages/profile.dart';
-// import 'package:englishetc_voice_ai/Registered_pages/signup.dart';
-// import 'package:englishetc_voice_ai/ttsexample.dart';
+import 'package:etc/theme/themeProvider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_tts/flutter_tts.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
-
-
-
 import '../Registered_pages/profile.dart';
 import '../Registered_pages/signup.dart';
 import '../const/color.dart';
+import 'package:provider/provider.dart';
+
 
 
 class appbar extends StatelessWidget implements PreferredSizeWidget {
@@ -53,6 +46,11 @@ class appbar extends StatelessWidget implements PreferredSizeWidget {
   // String valueChoose;
   @override
   Widget build(BuildContext context) {
+
+    return Consumer<ThemeModel>(
+      builder: (context, ThemeModel themeNotifier, child){
+
+      
     return Scaffold(
         key:  _scaffoldKey,
 
@@ -252,9 +250,20 @@ class appbar extends StatelessWidget implements PreferredSizeWidget {
 
                     )]),
 
-
-            )
+            
+            ),
+          actions: [
+            IconButton(onPressed: (){
+               themeNotifier.isDark
+              ? themeNotifier.isDark=false
+              : themeNotifier.isDark=true;
+            }, 
+            icon:Icon(themeNotifier.isDark? Icons.nightlight_round
+            : Icons.wb_sunny))
+          ],  
         )
+    );
+    },
     );
   }
 

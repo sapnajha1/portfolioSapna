@@ -9,6 +9,7 @@ import 'dart:convert';
 // import 'package:englishetc_voice_ai/constWidget/textwidget.dart';
 // import 'package:englishetc_voice_ai/focus_screens/f_tablet.dart';
 // import 'package:englishetc_voice_ai/ttsexample.dart';
+import 'package:etc/components/api_function/api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:google_sign_in/google_sign_in.dart';

@@ -2,12 +2,10 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:ui';
-// import 'package:englishetc_voice_ai/api_function/model.dart';
-// import 'package:englishetc_voice_ai/ttsexample.dart';
+import 'package:etc/components/api_function/api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-// import 'package:speech_to_text/speech_to_text.dart' as stt;
 import '../api_function/model.dart';
 import '../components/Article.dart';
 import '../components/Focus.dart';
@@ -51,111 +49,6 @@ class _MobilePageState extends State<MobilePage> {
     fetchData(); // Call the function to fetch data when the widget initializes
   }
 
-  //
-  // @override
-  // void initState(){
-  //   super.initState();
-  //   fetchData();
-  //   _initializeSpeech();
-  // }
-  //
-  // Future <void> _initializeSpeech()async{
-  //   await _speech.initialize(
-  //       onStatus : (status){
-  //         print("Speech recongnition status: $status");
-  //       });
-  //
-  // }
-
-  // List availablecontent=["article 1","article 2","article 3","article 4","level 1","level 2","level 3","level 4","level 5"];
-  // Future<void> _startListening() async {
-  //   if (!_isListening) {
-  //     // bool available = await _speech.initialize();
-  //     bool available = await _speech.initialize();
-  //
-  //     if (available) {
-  //       setState(() {
-  //         _isListening = true;
-  //       });
-  //       _speech.listen(
-  //         onResult: (result) {
-  //           setState(() {
-  //             _text = result.recognizedWords.toLowerCase(); // Convert to lowercase for case-insensitive matching
-  //             print(_text);
-  //
-  //             // Check recognized voice command and change the level
-  //
-  //             if (_text.contains("level 1")) {
-  //               setState(() {
-  //                 selected_index = 1;
-  //               });
-  //             } else if (_text.contains("level 2")) {
-  //               setState(() {
-  //                 selected_index = 2;
-  //               });
-  //             } else if (_text.contains("level 3")) {
-  //               setState(() {
-  //                 selected_index = 3;
-  //               });
-  //             } else if (_text.contains("level 4")) {
-  //               setState(() {
-  //                 selected_index = 4;
-  //               });
-  //             } else if (_text.contains("level 5")) {
-  //               setState(() {
-  //                 selected_index = 5;
-  //               });
-  //             }
-  //
-  //
-  //             // Check recognized voice command and change the topic
-  //
-  //             else if (_text.contains("article 1")){
-  //               setState(() {
-  //                 article_name_in=0;
-  //               });
-  //             } else if (_text.contains("article 2")){
-  //               setState(() {
-  //                 article_name_in= 1;
-  //               });
-  //
-  //
-  //             }else if (_text.contains("article 3")){
-  //               setState(() {
-  //                 article_name_in=2;
-  //               });
-  //
-  //
-  //             }else if (_text.contains("article 4")) {
-  //               setState(() {
-  //                 article_name_in = 3;
-  //               });
-  //             }
-  //             // }else if (!availablecontent.contains(_text)){
-  //             //   ScaffoldMessenger.of(context).showSnackBar(
-  //             //     SnackBar(
-  //             //       content: Text('invalid content'),
-  //             //
-  //             //     ),
-  //             //   );
-  //             // }
-  //
-  //           });
-  //         },
-  //       );
-  //     }
-  //   }
-  // }
-  //
-  // Future<void> _stopListening() async {
-  //   if (_isListening) {
-  //     setState(() {
-  //       _isListening = false;
-  //     });
-  //     await _speech.stop();
-  //   }
-  // }
-  //
 
 
   FlutterTts flutterTts = FlutterTts();
@@ -175,27 +68,49 @@ class _MobilePageState extends State<MobilePage> {
 
   List<Article_Model> article_content=[];
   Future<void> fetchData() async {
+    // try {
+    //   final response = await http.get(Uri.parse('https://merd-api.merakilearn.org/englishAi/content/today'));
+
+    //   if (response.statusCode == 200) {
+    //     final jsonData = json.decode(response.body)['articles'] as List<dynamic>;
+
+    //     setState(() {
+    //       article_content = jsonData
+    //           .map((data) => Article_Model.fromJson(data as Map<String, dynamic>))
+    //           .toList();
+    //     });
+    //     print(article_content.length);
+    //     print(article_content);
+    //     print("hello");
+    //   } else {
+    //     // Handle error if the API request fails.
+    //     print('API request failed with status code: ${response.statusCode}');
+    //   }
+    // } catch (e) {
+    //   print('Error fetching data: $e');
+    // }
+
     try {
-      final response = await http.get(Uri.parse('https://merd-api.merakilearn.org/englishAi/content/today'));
+      final response= await http.get(Uri.parse('https://merd-api.merakilearn.org/englishAi/content/today'));
+      if (response.statusCode==200){
+        final responseBody= response.body;
+        if (responseBody != null && responseBody.isNotEmpty){
+          final jsonData = json.decode(responseBody)['articles'] as List<dynamic>;
+          
+          setState(() {
+            article_content = jsonData.map((data)=> 
+            Article_Model.fromJson(data as Map<String, dynamic>)).toList();
 
-      if (response.statusCode == 200) {
-        final jsonData = json.decode(response.body)['articles'] as List<dynamic>;
+          });
 
-        setState(() {
-          article_content = jsonData
-              .map((data) => Article_Model.fromJson(data as Map<String, dynamic>))
-              .toList();
-        });
-        print(article_content.length);
-        print(article_content);
-        print("hello");
-      } else {
-        // Handle error if the API request fails.
-        print('API request failed with status code: ${response.statusCode}');
-      }
-    } catch (e) {
-      print('Error fetching data: $e');
-    }
+          print(article_content.length);
+          print(article_content);
+          
+        }else{
+          print('Response body is null or empty');
+        }
+      } else{print('Api request failed with status code :${response.statusCode}');}
+    }catch( error){print("CatchError : ${error}");}
   }
 
 
@@ -401,14 +316,7 @@ class _MobilePageState extends State<MobilePage> {
     );
 
   }
-  // @override
-  // void dispose() {
-  //   _speech.stop();
-  //   super.dispose();
-  //   _uiChangeStreamController.close(); // Close the stream when the widget is disposed
-  //   super.dispose();
-  // }
-}
+
 
 //
 //
@@ -593,3 +501,4 @@ class _MobilePageState extends State<MobilePage> {
 //     );
 //   }
 // }
+}
