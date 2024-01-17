@@ -48,7 +48,7 @@ class _f_MobilePageState extends State<f_MobilePage> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               // ARTICLE IMAGE
-                              Article_image(height:mq.height*0.08,width:mq.width*0.200,),
+                              Article_image(height:mq.height*0.08,width:mq.width*0.200, imgurl:'images/games.jpeg',),
 
                               //// ARTICLE NAME
                               Flexible(child:textwidget( widget.article_content[widget.article_name_in].title,14, FontWeight.bold, Colors.black,),)

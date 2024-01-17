@@ -315,7 +315,7 @@ class _DesktopPageState extends State<DesktopPage> {
                       children: [
 
                         // Article image
-                        Article_image(height:mq.height*0.15,width:mq.width*0.15,),
+                        Article_image(height:mq.height*0.15,width:mq.width*0.15, imgurl: 'images/games.jpeg',),
 
                         // Article name
                         const SizedBox(width:0),
