@@ -6,6 +6,7 @@
 // import 'package:englishetc_voice_ai/splash.dart';
 // import 'package:englishetc_voice_ai/voice_re.dart';
 import 'package:etc/responsive/responsive_layout.dart';
+import 'package:etc/splash.dart';
 import 'package:etc/theme/themeProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -51,11 +52,11 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         ),
         home:
-        // splashScreen()
-          Responsive_layout(
-                mobileScaffold: MobilePage(title: 'mobilepage',userdata:googleSignInAccount),
-                tabletScaffold: tabletPage(title: 'tabletpage',userdata:googleSignInAccount),
-                desktopScaffold: DesktopPage(title: 'desktoppage',userdata:googleSignInAccount))
+        splashScreen()
+        //   Responsive_layout(
+        //         mobileScaffold: MobilePage(title: 'mobilepage',userdata:googleSignInAccount),
+        //         tabletScaffold: tabletPage(title: 'tabletpage',userdata:googleSignInAccount),
+        //         desktopScaffold: DesktopPage(title: 'desktoppage',userdata:googleSignInAccount))
 
     );
     },)

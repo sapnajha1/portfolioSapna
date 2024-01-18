@@ -1,25 +1,25 @@
 
-<<<<<<< HEAD
+// <<<<<<< HEAD
 
 
 
 // //   API   MODEL
-=======
+// =======
 //   API   MODEL
->>>>>>> 85ff66d9a514cc39cd0d55d9611967e659918962
+// >>>>>>> 85ff66d9a514cc39cd0d55d9611967e659918962
 
-// class Article_Model{
-//   late String title;
-//   late String level1;
-//   late String level2;
-//   late String level3;
-//   late String level4;
-//   late String level5;
+class Article_Model{
+  late String title;
+  late String level1;
+  late String level2;
+  late String level3;
+  late String level4;
+  late String level5;
   
 
-//   Article_Model({r,required this.title,required this.level1,required this.level2,required this.level3, required this.level4, required this.level5});
+  Article_Model({r,required this.title,required this.level1,required this.level2,required this.level3, required this.level4, required this.level5});
 
-<<<<<<< HEAD
+// <<<<<<< HEAD
 //   factory Article_Model.fromJson(Map<dynamic,dynamic> json){
 //     return Article_Model(
 //       title:  json['title'] as String ,
@@ -30,7 +30,7 @@
 //       level5: json['level5'] as String ,
 //     //   factory Article_Model.fromJson(Map<String, dynamic> json) {
 //   // Map<String, dynamic>? idMap = json['id'] as Map<String, dynamic>?;
-=======
+// =======
   factory Article_Model.fromJson(Map<dynamic,dynamic> json){
     return Article_Model(
 
@@ -39,7 +39,7 @@
         level2: json['levelWise']['level_2']['content'] as String,
         level3: json['levelWise']['level_3']['content'] as String,
         level4: json['levelWise']['level_4']['content'] as String,
-        level5: json['levelWise']['level_5']['content'] as String
+        level5: json['levelWise']['level_5']['content'] as String,
 
       // title:  json['title'] as String ,
       // level1: json['level1'] as String ,
@@ -49,7 +49,7 @@
       // level5: json['level5'] as String ,
     //   factory Article_Model.fromJson(Map<String, dynamic> json) {
   // Map<String, dynamic>? idMap = json['id'] as Map<String, dynamic>?;
->>>>>>> 85ff66d9a514cc39cd0d55d9611967e659918962
+// >>>>>>> 85ff66d9a514cc39cd0d55d9611967e659918962
 
 //   // return Article_Model(
 //   //   title: json['title'] as String,
@@ -60,11 +60,11 @@
 //   //   level5: json['level5'] as String,
 //     // id:Map<String,int>.from(json['id'as Map]),
 //     // id: idMap != null ? Map<String, int>.from(idMap) : <String, int>{},
-//   );
-// }
+  );
+}
       
   
-// }
+}
 
 // class UserData {
 //   final String usersReading;
