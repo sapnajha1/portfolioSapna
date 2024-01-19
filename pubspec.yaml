@@ -42,7 +42,7 @@ dependencies:
   http: ^1.1.0
   url_launcher: ^6.1.14
   flutter_tts: ^3.8.3
-#  speech_to_text: ^6.3.0
+  speech_to_text: ^6.3.0
   flutter_launcher_icons: ^0.13.1
   firebase_core: ^2.24.0
   shared_preferences: ^2.2.2
@@ -96,6 +96,10 @@ flutter:
     - images/user.png
     - images/speaking.png
     - images/no-talking.png
+    - images/horn.png
+    - images/no horn.png
+    - images/microphone.png
+    - images/offmicrophone.png
 
 #       - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

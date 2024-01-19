@@ -1,13 +1,10 @@
 
 import 'dart:async';
 import 'dart:convert';
-
-import 'package:etc/components/api_function/api.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
 import 'package:http/http.dart' as http;
 import '../api_function/model.dart';
 import '../components/Article.dart';
@@ -17,7 +14,7 @@ import '../constWidget/textwidget.dart';
 import '../focus_screens/f_desktop.dart';
 import '../ttsexample.dart';
 import 'aap_bar.dart';
-
+import 'package:speech_to_text/speech_to_text.dart' as stt;
 
 
 
@@ -34,8 +31,6 @@ class DesktopPage extends StatefulWidget {
 
 class _DesktopPageState extends State<DesktopPage> {
 
-  // Color btn_col=Colors.white;
-
   Color btn_col = Colors.white;
   double textsize=20;
   var Paragraph;
@@ -43,162 +38,155 @@ class _DesktopPageState extends State<DesktopPage> {
   int article_name_in=2;
   int selected_index2=1;
   StreamController _uiChangeStreamController=StreamController();
-  // final stt.SpeechToText _speech=stt.SpeechToText();
+  final stt.SpeechToText _speech=stt.SpeechToText();
   String userVoiceData='';
   Map<String,dynamic> userPostData={};
   List<String> heyspeak=[];
   List<String> notAvailable = [];
   List<String> Available = [];
-
-
   bool _isListening=false;
   String _text="";
+  bool isSpeaking = true;
+  bool isStopping = false;
 
 
   @override
-  void initState() {
+  void initState(){
     super.initState();
-    fetchData(); // Call the function to fetch data when the widget initializes
+    fetchData();
+    _initializeSpeech();
   }
 
-  // @override
-  // void initState(){
-  //   super.initState();
-  //   fetchData();
-  //   _initializeSpeech();
-  // }
+
+  /////////////// SPEECH TO TEXT FUNCTION //////////////////////////
+
+  Future <void> _initializeSpeech()async{
+    await _speech.initialize(
+        onStatus : (status){
+          print("Speech recongnition status: $status");
+        });
+
+  }
+
+  List availablecontent=["article 1","article 2","article 3","article 4","level 1","level 2","level 3","level 4","level 5"];
+  Future<void> _startListening() async {
+    if (!_isListening) {
+
+      bool available = await _speech.initialize();
+
+      if (available) {
+        setState(() {
+          _isListening = true;
+        });
+        _speech.listen(
+          onResult: (result) {
+            setState(() {
+              _text = result.recognizedWords.toLowerCase();
+
+              heyspeak = _text.split(' ');
+              // print("$heyspeak yes");
+
+              if (_text.contains("level 1")) {
+                setState(() {
+                  selected_index = 1;
+                });
+              } else if (_text.contains("level 2")) {
+                setState(() {
+                  selected_index = 2;
+                });
+              } else if (_text.contains("level 3")) {
+                setState(() {
+                  selected_index = 3;
+                });
+              } else if (_text.contains("level 4")) {
+                setState(() {
+                  selected_index = 4;
+                });
+              } else if (_text.contains("level 5")) {
+                setState(() {
+                  selected_index = 5;
+                });
+              }
 
 
-  /////////////////////////////////////////
-  //// SPEECH TO TEXT FUNCTION
+              // Check recognized voice command and change the topic /////////////////////////////////////
 
-  // Future <void> _initializeSpeech()async{
-  //   await _speech.initialize(
-  //       onStatus : (status){
-  //         print("Speech recongnition status: $status");
-  //       });
-  //
-  // }
-
-  // List availablecontent=["article 1","article 2","article 3","article 4","level 1","level 2","level 3","level 4","level 5"];
-  // Future<void> _startListening() async {
-  //   if (!_isListening) {
-  //
-  //     bool available = await _speech.initialize();
-  //
-  //     if (available) {
-  //       setState(() {
-  //         _isListening = true;
-  //       });
-  //       _speech.listen(
-  //         onResult: (result) {
-  //           setState(() {
-  //             _text = result.recognizedWords.toLowerCase();
-  //
-  //             heyspeak = _text.split(' ');
-  //             // print("$heyspeak yes");
-  //
-  //             if (_text.contains("level 1")) {
-  //               setState(() {
-  //                 selected_index = 1;
-  //               });
-  //             } else if (_text.contains("level 2")) {
-  //               setState(() {
-  //                 selected_index = 2;
-  //               });
-  //             } else if (_text.contains("level 3")) {
-  //               setState(() {
-  //                 selected_index = 3;
-  //               });
-  //             } else if (_text.contains("level 4")) {
-  //               setState(() {
-  //                 selected_index = 4;
-  //               });
-  //             } else if (_text.contains("level 5")) {
-  //               setState(() {
-  //                 selected_index = 5;
-  //               });
-  //             }
-  //
-  //
-  //             // Check recognized voice command and change the topic
-  //
-  //             else if (_text.contains("article 1")){
-  //               setState(() {
-  //                 article_name_in=0;
-  //               });
-  //             } else if (_text.contains("article 2")){
-  //               setState(() {
-  //                 article_name_in= 1;
-  //               });
-  //
-  //
-  //             }else if (_text.contains("article 3")){
-  //               setState(() {
-  //                 article_name_in=2;
-  //               });
-  //
-  //
-  //             }else if (_text.contains("article 4")) {
-  //               setState(() {
-  //                 article_name_in = 3;
-  //               });
-  //             }
-  //             // }else if (!availablecontent.contains(_text)){
-  //             //   ScaffoldMessenger.of(context).showSnackBar(
-  //             //     SnackBar(
-  //             //       content: Text('invalid content'),
-  //             //
-  //             //     ),
-  //             //   );
-  //             // }
-  //
-  //           });
-  //
-  //         },
-  //
-  //       );
-  //     }
-  //
-  //   }
-  // }
-
-  // Set<String> voiceset= Set<String>();
-  // voiceset.addAll(heyspeak);
-
-  // Future<void> _stopListening() async {
-  //   if (_isListening) {
-  //     setState(() {
-  //       // heyspeak.add(_text);
-  //       _isListening = false;
-  //     });
-  //     await _speech.stop();
-  //   }
-  // }
+              else if (_text.contains("article 1")){
+                setState(() {
+                  article_name_in=0;
+                });
+              } else if (_text.contains("article 2")){
+                setState(() {
+                  article_name_in= 1;
+                });
 
 
+              }else if (_text.contains("article 3")){
+                setState(() {
+                  article_name_in=2;
+                });
 
-  ///////////////////////////////////////////////////////////////////////////////
 
+              }else if (_text.contains("article 4")) {
+                setState(() {
+                  article_name_in = 3;
+                });
+              }
+            });
 
-  // TEXT TO SPEECH FUNCTION
+          },
+
+        );
+      }
+
+    }
+  }
+
+  Future<void> _stopListening() async {
+    if (_isListening) {
+      setState(() {
+        // heyspeak.add(_text);
+        _isListening = false;
+      });
+      await _speech.stop();
+    }
+  }
+
+  //////////////////// TEXT TO SPEECH FUNCTION /////////////////////////
+
   FlutterTts flutterTts = FlutterTts();
-  Future<void> speakText(String Paragraph) async {
+  Future<bool> speakText(String Paragraph) async {
     final ttsExample = TtsExample(); // Create an instance of the TtsExample class
-    await ttsExample.speakText(Paragraph); // Call the speakText function
+    bool success;
+    try {
+      await ttsExample.speakText(Paragraph); // Call the speakText function
+      success = true;
+    } catch (e) {
+      success = false;
+      print('Failed to speak: $e');
+    }
 
-
-    // Emit a UI change event to stop the AI
-    _uiChangeStreamController.sink.add(null);
+    if (success) {
+      // Emit a UI change event to stop the AI
+      _uiChangeStreamController.sink.add(null);
+    }
+    return success;
   }
 
-  Future<void> stopSpeaking() async {
-    await flutterTts.stop(); // Stop TTS
+  Future<bool> stopSpeaking() async {
+    bool success;
+    try {
+      await flutterTts.stop();
+      success = true;
+    } catch (e) {
+      success = false;
+      print('Failed to stop speaking: $e');
+    }
+    return success;
   }
-  /////////////////////////////////////////////////////////////////////////////
-  ///
-  ///PONOUNCTICIATE  WORDS FUNCTION
 
+
+  ///////////////// PRONUNCIATION WORDS or Speaking Test FUNCTION ////////////////////
 
 
   TextSpan buildTextSpan(List<String> words) {
@@ -228,7 +216,8 @@ class _DesktopPageState extends State<DesktopPage> {
 
 
 
-  /////////////////////////////////////////////////////////////////////////////
+  //////////////// Used ChatGPT API to fetch Data //////////////////
+
   List<Article_Model> article_content=[];
   Future<void> fetchData() async {
     try {
@@ -254,22 +243,13 @@ class _DesktopPageState extends State<DesktopPage> {
     }
   }
 
-///////////////////////////////////////////////////////////////////////////////////////////
-//   Future<void> Comparison(){
-//
-//   }
 
+/////////////// Start Main Body or Screen Of The Code/////////////////
 
-
-////////////////////////////////////////////////////////////////////////////////////
   @override
   Widget build(BuildContext context) {
     // Paragraph= article_content[article_name_in].level2;
-
-
     var mq= MediaQuery.of(context).size;
-
-
     if (article_content.isEmpty){
 
       return const Center(child:
@@ -406,7 +386,67 @@ class _DesktopPageState extends State<DesktopPage> {
 
 
                       ],),
-                    // SizedBox(height:20),
+                    SizedBox(height:20),
+
+                    Align(alignment: Alignment.centerLeft,
+                      child: Container(width: 100,
+                        decoration: BoxDecoration(color: focusmode,borderRadius: BorderRadius.circular(50),border: Border.all(width: 3,color: highlights),
+                        ),
+                        child: Align(alignment: Alignment.centerLeft,
+                          child: Row(
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    if (Paragraph != null) {
+                                      if (isSpeaking && !isStopping) {
+                                        isStopping = true;
+                                        isSpeaking = false;
+                                        stopSpeaking().then((success) {
+                                          isStopping = false;
+                                        });
+                                      } else {
+                                        isSpeaking = true;
+                                        isStopping = false;
+                                        speakText(Paragraph!).then((success) {
+                                          if (!success) {
+                                            isSpeaking = false;
+                                            isStopping = true;
+                                          }
+                                        });
+                                      }
+                                    }
+                                  });
+                                },
+                                child: Image.asset(
+                                  isSpeaking
+                                      ? (isStopping ? "images/horn.png" : "images/horn.png")
+                                      : "images/no horn.png",
+                                  height: 20,
+                                  width: 20,
+                                ),
+                              ),
+
+
+                              SizedBox(width: 8,),
+                              InkWell(
+                                onTap: () {
+                                },
+                                child: Text(
+                                  'Listen',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                      ),
+                    ),
+
 
                     // Row(
                     //   children: [
@@ -525,26 +565,46 @@ class _DesktopPageState extends State<DesktopPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children:[
                     InkWell(onTap: (){setState((){if(article_name_in>0){article_name_in--;}});}, child: Image.asset("images/left-arrow.png",height:35,width:35)),
+                    InkWell(onTap: (){
+                      setState(() {
+
+                        if(_isListening){
+                          _stopListening();
+                        }else{
+                          _startListening();
+                        }
+                      });
+                    },child: Image.asset( _isListening ? 'images/offmicrophone.png' : 'images/microphone.png',
+                      height: 40,
+                      width: 40,),),
                     InkWell(onTap: (){setState((){if(article_name_in<article_content.length-1){article_name_in++;}});},child: Image.asset("images/right-arrow-black-triangle.png",height:35,width:35)),
                     // InkWell(onTap:(){Navigator.push(context, MaterialPageRoute(builder: (context)=>article_names(article_content: article_content)));},child:Text("Content",style: TextStyle(fontSize:20,fontWeight: FontWeight.bold),))
                   ])),
 
+          // Container(height: 60,width:mq.width
+          //     ,child:Row(
+          //         mainAxisAlignment: MainAxisAlignment.spaceAround,
+          //         children:[
+          //           InkWell(onTap: (){setState((){if(article_name_in>0){article_name_in--;}});}, child: Image.asset("images/left-arrow.png",height:35,width:35)),
+          //           InkWell(onTap: (){setState((){if(article_name_in<article_content.length-1){article_name_in++;}});},child: Image.asset("images/right-arrow-black-triangle.png",height:35,width:35)),
+          //           // InkWell(onTap:(){Navigator.push(context, MaterialPageRoute(builder: (context)=>article_names(article_content: article_content)));},child:Text("Content",style: TextStyle(fontSize:20,fontWeight: FontWeight.bold),))
+          //         ])),
 
 
-        ],
-      ),
+
+        ],),
     );
   }
 
 
 
-  // @override
-  // void dispose() {
-  //   _speech.stop();
-  //   super.dispose();
-  //   _uiChangeStreamController.close(); // Close the stream when the widget is disposed
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    _speech.stop();
+    super.dispose();
+    _uiChangeStreamController.close(); // Close the stream when the widget is disposed
+    super.dispose();
+  }
 
 
 
