@@ -75,7 +75,7 @@ class appbar extends StatelessWidget implements PreferredSizeWidget {
                             // fit: BoxFit.cover,
                           ),
                         ),
-                        Text("English AI24",style: TextStyle(color: menu,fontWeight: FontWeight.bold,fontSize: textfont),),
+                        Text("English AI",style: TextStyle(color: menu,fontWeight: FontWeight.bold,fontSize: textfont),),
 
                       ],
                     ),
